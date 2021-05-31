@@ -1,5 +1,5 @@
-# ECS (Elastic Container Service)  
-<img src="https://github.com/kmitsolution/AWS-ECS/blob/main/images/ECS-logo.png" width="100" height="200" /> <br /> 
+# ECS (Elastic Container Service) <img src="https://github.com/kmitsolution/AWS-ECS/blob/main/images/ECS-logo.png" width="100" height="100" /> <br />  
+
 <ul>
     <li>AWS Container Service</li>
     <li>Launch Docker Containers on AWS</li>
