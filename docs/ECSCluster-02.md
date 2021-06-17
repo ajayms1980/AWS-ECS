@@ -131,7 +131,7 @@ Create a cloudformation file to create the following VPC Infrastructure
 
     aws cloudformation create-stack --capabilities CAPABILITY_IAM --stack-name ecs-core-infrastructure --template-body file://./core-infrastructure-setup.yml
 
-### Step 3:- Setup a Cluster 
+### Step 3:- Setup a Cluster - EC2 Instance
 <ul>
   <li> Create Cluster ( by Clicking on Cluster and then click on Create Cluster Button ) </li>
   <li> Select cluster template:-> Select <b> EC2 Linux + Networking </b></li>
@@ -143,13 +143,73 @@ Create a cloudformation file to create the following VPC Infrastructure
        5. EC2 AMI ID*:- AMAZON LINUX 2 AMI </br>
        6. Root EBS Volume Size (GiB):- 30 GB </br>
        7. Key pair : (Select any valid key pair) </br>
-       8. VPC : (Select the VPC which get created above with cloud formation)
-       9. Subnet: (Select the subnet which get created for VPC mentioned in previous step)
-       10.
-
-       
-
+       8. VPC : (Select the VPC which get created above with cloud formation) </br>
+       9. Subnet: (Select the subnet which get created for VPC mentioned in previous step) </br>
+       10. Auto assign public IP : Use Subnet Settings </br>
+       11. Security group: Create new security group </br>
+       12. Security group inbound rules CIDR:- 0.0.0.0/0 Port Range:- 80 </br>
+       13. Select IAM Role ecs_ec2_Role1 (Which we have created for ECS earlier) </br>
+       14. Click on Create Button </br>
+       15. Wait for Cluster to Create and eventually it will be created
        
 
   </li>
+</ul>  
+
+### Step 4: Setup a Cluster - Fargate
+<ul>
+  <li> Create Cluster ( by Clicking on cluster and then click on Create Cluster Button) </li>
+  <li> Select cluster template:- Select <b>Networking only</b></li>
+  <li> Cluster Name:- mycluster-fargate </br>
+       Click on Create Button to create cluster
+  </li>
+  
+  ### Step 5: Create Task Definition -Fargate
+  <ul>
+  <li> Select Task Definition </li>
+  <li> Select Launch Type as <b>Fargate </b> and Click on <b>Next Step </b></li>
+  <li>Fill the following Details related to Task Definition </br>
+      1. Task Definition Name :- Task Name ( I am creating Task1) </br>
+      2. Task Role :- ecs_task_Role4 ( This role was created on the top) </br>
+      3. Task execution role :- ecs_task_Role4 ( This role was created on the top) </br>
+      4. Task memory (GB) :- Memory used by container ( I am taking 0.5 GB because I am going to run nginx service) </br>
+      5. Task CPU (vCPU):- Cpu Capcity ( I am taking 0.25) </br>
+      6. Click on Add Container and give image name ( I am using nginx ) and container port as well as the security group </br>
+      7. Click on Create Button to Create Task  Definition. </br>
+       </li>
+  </ul>
+
+### Step 6: Create Task 
+<ul>
+  <li> Select Fargate Cluster ( in my case it is mycluster-fargate) </li>
+  <li> Click on Run new task Button</li>
+  <li> Add Following Details to the Task</br>
+      1. Launch Type:- Fargate </br>
+      2. Task Definition:- Select the Task definition which you have created in step5 (Task1 )</br>
+      3. Number of tasks:- 1 ( you can select with your choice or requirement) </br>
+      4. VPC :- Select the VPC which you have created for cluster </br>
+      5. Subnet:- select all the subnet under this VPC </br>
+      6. Click on Run Task Button </br>
+      7. Task will be create and Running with public IP address</br>
+      8. Use public IP address and check on browser that nginx page is accessible or not
+  </li>
+  
+</ul>  
+
+### Step 7: Create Service
+<ul>
+  <li> Select Fargate Cluster ( in my case it is mycluster-fargate) </li>
+  <li> Click on Services and Click on Create Button</li>
+  <li> Add Following Details to the Task</br>
+      1. Launch Type:- Fargate </br>
+      2. Task Definition:- Select the Task definition which you have created in step5 (Task1 )</br>
+      3. Number of tasks:- 2 ( you can select with your choice or requirement) </br>
+      4. Service Name:- nginx-service </br>
+      5. Service Type:- Replica </br>
+      6. VPC :- Select the VPC which you have created for cluster </br>
+      7. Subnet:- select all the subnet under this VPC </br>
+      8. Click on Create Service </br>
+      9. Task will be create and Running with public IP address</br>
+      10. Use public IP address and check on browser that nginx page is accessible or not
+      </li>
 </ul>  
