@@ -131,3 +131,25 @@ Create a cloudformation file to create the following VPC Infrastructure
 
     aws cloudformation create-stack --capabilities CAPABILITY_IAM --stack-name ecs-core-infrastructure --template-body file://./core-infrastructure-setup.yml
 
+### Step 3:- Setup a Cluster 
+<ul>
+  <li> Create Cluster ( by Clicking on Cluster and then click on Create Cluster Button ) </li>
+  <li> Select cluster template:-> Select <b> EC2 Linux + Networking </b></li>
+  <li> Provide Following Details to template </br>
+       1. Provide Cluster name ( I am giving cluster name as mycluster ) </br>
+       2. Provisioning Model :- On-Demand Instance </br>
+       3. EC2 instance type* :- t2.small ( you can change as per your requirement)</br>
+       4. Number of instances*:- 1 ( you can change as per your requirement) </br>
+       5. EC2 AMI ID*:- AMAZON LINUX 2 AMI </br>
+       6. Root EBS Volume Size (GiB):- 30 GB </br>
+       7. Key pair : (Select any valid key pair) </br>
+       8. VPC : (Select the VPC which get created above with cloud formation)
+       9. Subnet: (Select the subnet which get created for VPC mentioned in previous step)
+       10.
+
+       
+
+       
+
+  </li>
+</ul>  
